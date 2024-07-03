@@ -1,0 +1,65 @@
+CREATE DATABASE cineCampus;
+USE cineCampus;
+
+CREATE TABLE tipoActor (
+id int not null,
+descripcion VARCHAR(50) not null,
+CONSTRAINT pk_id PRIMARY KEY (id) 
+)ENGINE = Innodb;
+
+CREATE TABLE genero (
+id int not null,
+descripcion VARCHAR(50) not null,
+CONSTRAINT pk_id PRIMARY KEY (id) 
+)ENGINE = Innodb;
+
+CREATE TABLE pais (
+id int not null,
+descripcion VARCHAR(50) not  null,
+CONSTRAINT pk_id PRIMARY KEY (id) 
+)ENGINE = Innodb;
+
+CREATE TABLE formato (
+id int not null,
+descripcion VARCHAR(50) not null,
+CONSTRAINT pk_id PRIMARY KEY (id) 
+)ENGINE = Innodb;
+
+CREATE TABLE pelicula (
+id int not null,
+codinterno VARCHAR(5),
+nombre VARCHAR (50),
+duracion VARCHAR (20),
+sinopsis text,
+CONSTRAINT pk_id PRIMARY KEY (id)
+)ENGINE = Innodb;
+
+CREATE TABLE peliculaformato (
+idpelicula int,
+idformato int,
+cantidad int,
+CONSTRAINT pk_id PRIMARY KEY (idpelicula),
+CONSTRAINT FK_peliculaformato_pelicula FOREIGN KEY (idpelicula) REFERENCES pelicula(id),
+CONSTRAINT FK_peliculaformato_formato FOREIGN KEY (idformato) REFERENCES formato(id)
+)ENGINE = Innodb;
+
+CREATE TABLE actor(
+id int,
+nombre VARCHAR(50),
+idnacionalidad int,
+edad int,
+idgenero int,
+CONSTRAINT pk_id PRIMARY KEY (id),
+CONSTRAINT FK_actor_pais FOREIGN KEY (idnacionalidad) REFERENCES pais(id),
+CONSTRAINT FK_actor_genero FOREIGN KEY (idgenero) REFERENCES genero(id)
+)ENGINE = Innodb;
+
+CREATE TABLE peliculaprotagonista(
+idpelicula int,
+idprotagonista int,
+idtipoactor int,
+CONSTRAINT pk_id PRIMARY KEY (idpelicula),
+CONSTRAINT FK_peliculaprotagonista_pelicula FOREIGN KEY (idpelicula) REFERENCES pelicula(id),
+CONSTRAINT FK_peliculaprotagonista_actor FOREIGN KEY (idprotagonista) REFERENCES actor(id),
+CONSTRAINT FK_peliculaprotagonista_tipoActor FOREIGN KEY (idtipoActor) REFERENCES tipoActor(id)
+)ENGINE = Innodb;
